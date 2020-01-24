@@ -20,14 +20,6 @@ public class HeartiController {
 	@Autowired
 	private HeartInfoService heartInfoService;
 
-	/*
-	 * @RequestMapping(value = "/") public ResponseEntity<Patient> getPatientInfo()
-	 * throws SQLException { try { Patient patient =
-	 * heartInfoService.getPatientInfo(); if (patient == null) { return new
-	 * ResponseEntity<Patient>(patient, HttpStatus.NOT_FOUND); } else return new
-	 * ResponseEntity<Patient>(patient, HttpStatus.OK); } catch (HeartiExceptions e)
-	 * { // TODO Auto-generated catch block e.printStackTrace(); } return null; }
-	 */
 	@RequestMapping(value = "/weeklyReport")
 	public ResponseEntity<List<IntervalPrediction>> weeklyReport() throws SQLException {
 		try {
