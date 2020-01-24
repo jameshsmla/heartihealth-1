@@ -7,35 +7,17 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.discoveri.heartihealth.dto.CardioArrestDetection;
 import com.discoveri.heartihealth.dto.WeeklyPrediction;
 import com.discoveri.heartihealth.dto.YearlyPrediction;
 import com.discoveri.heartihealth.exceptions.PatientExceptions;
-import com.discoveri.heartihealth.model.Patient;
+
 import com.discoveri.heartihealth.repository.HeartInfoRepo;
 
 @Repository
 public class HeartInfoInfoRepoImpl  implements HeartInfoRepo{
 	
-	@Override
-	public Patient getPatientInfo() throws PatientExceptions {
-		Connection con=null;
-		Patient emp;
-		try {
-			con = DataSource.getConnetion();
-			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("select * from patient");
-			emp = new Patient();
-			while (rs.next()) {
-
-				emp.setId(rs.getInt(1));
-				emp.setSerialno(rs.getInt(2));
-			} 
-			con.close();
-		} catch (Exception e) {
-			throw new PatientExceptions(e.getMessage());
-		}
-		return emp;
-	}
+	
 
 	/*
 	 * @Override public List<Patient> getAllPatients() { Connection con=null;
@@ -75,6 +57,9 @@ public class HeartInfoInfoRepoImpl  implements HeartInfoRepo{
 		return weeklyPredictions;
 	}
 	
+	
+	
+	
 	/*
 	 * public static void main(String[] args) throws PatientExceptions {
 	 * PatientInfoRepoImpl obj=new PatientInfoRepoImpl(); List<WeeklyPrediction>
@@ -87,9 +72,41 @@ public class HeartInfoInfoRepoImpl  implements HeartInfoRepo{
 		return null;
 	}
 
+
+
+
 	@Override
-	public List<Patient> getAllPatients() {
+	public List<CardioArrestDetection> totalCardioArrestDetection(int memberid) {
 		// TODO Auto-generated method stub
-		return null;
+		
+		List<CardioArrestDetection> cardioArrestDetections =new ArrayList<CardioArrestDetection>();
+		Connection con=null;
+		try {
+			con = DataSource.getConnetion();
+			Statement stmt = con.createStatement();
+			ResultSet rs;
+			
+			if(memberid < 0)
+				 rs = stmt.executeQuery("select c.date,m.age,m.gender from memberinfo m inner join cardiodiagnosis c on c.memberinfo_member_id = m.member_id");
+			else
+			    rs = stmt.executeQuery("select c.date,m.age,m.gender from memberinfo m inner join cardiodiagnosis c on m.member_id = c.memberinfo_member_id where m.member_id = "+memberid);
+			//emp = new Patient();
+			while (rs.next()) {
+				CardioArrestDetection cardioArrestDetection =new CardioArrestDetection();
+				
+				cardioArrestDetection.setTimestamp(rs.getString(1));
+				cardioArrestDetection.setAgeBelowThirty(rs.getInt(2) <= 30 ? true : false);
+				cardioArrestDetection.setMale(rs.getString(3).equalsIgnoreCase("male") ? true : false);
+			
+				cardioArrestDetections.add(cardioArrestDetection);
+			} 
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return cardioArrestDetections;
+		
 	}
+
+	
 }

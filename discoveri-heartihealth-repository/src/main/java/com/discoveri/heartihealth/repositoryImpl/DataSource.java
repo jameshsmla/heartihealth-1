@@ -7,7 +7,7 @@ public class DataSource {
 		Connection con=null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/heartihealth", "root", "root");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/heartihealth", "root", "mysql");
 		} catch (Exception e) {
 			System.out.println(e);
 		}
