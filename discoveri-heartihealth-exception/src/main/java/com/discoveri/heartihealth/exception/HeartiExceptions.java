@@ -1,6 +1,6 @@
-package com.discoveri.heartihealth.exceptions;
+package com.discoveri.heartihealth.exception;
 
-public class PatientExceptions extends Exception {
+public class HeartiExceptions extends Exception {
 	private static final long serialVersionUID = 1L;
 	private String errorMessage;
 
@@ -8,12 +8,12 @@ public class PatientExceptions extends Exception {
 		return errorMessage;
 	}
 
-	public PatientExceptions(String errorMessage) {
+	public HeartiExceptions(String errorMessage) {
 		super(errorMessage);
 		this.errorMessage = errorMessage;
 	}
 
-	public PatientExceptions() {
+	public HeartiExceptions() {
 		super();
 	}
 

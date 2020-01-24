@@ -21,24 +21,10 @@ public class HeartiController {
 	@Autowired
 	private HeartInfoService heartInfoService;
 
-	/*@RequestMapping(value = "/")
-	public ResponseEntity<Patient> getPatientInfo() throws SQLException {
-		try {
-			Patient patient = heartInfoService.getPatientInfo();
-			if (patient == null) {
-				return new ResponseEntity<Patient>(patient, HttpStatus.NOT_FOUND);
-			} else
-				return new ResponseEntity<Patient>(patient, HttpStatus.OK);
-		} catch (PatientExceptions e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-	}*/
 	@RequestMapping(value = "/weeklyReport")
 	public ResponseEntity<List<WeeklyPrediction>> weeklyReport() throws SQLException {
 		try {
-			List<WeeklyPrediction> weeklypredication=heartInfoService.weekilyReport();
+			List<WeeklyPrediction> weeklypredication = heartInfoService.weekilyReport();
 			if (weeklypredication == null) {
 				return new ResponseEntity<List<WeeklyPrediction>>(weeklypredication, HttpStatus.NOT_FOUND);
 			} else
@@ -49,14 +35,14 @@ public class HeartiController {
 		}
 		return null;
 	}
-	
+
 	@RequestMapping(value = "/getTotalCardioArrestPrediction/{memberid}")
-	
-	public ResponseEntity<List<CardioArrestDetection>> getTotalCardioArrestPrediction(@PathVariable int memberid) throws SQLException {
+
+	public ResponseEntity<List<CardioArrestDetection>> getTotalCardioArrestPrediction(@PathVariable int memberid)
+			throws SQLException {
 		try {
-			
-			
-			List<CardioArrestDetection> cardioArrestDetections=heartInfoService.totalCardioArrestDetection(memberid);
+
+			List<CardioArrestDetection> cardioArrestDetections = heartInfoService.totalCardioArrestDetection(memberid);
 			if (cardioArrestDetections == null) {
 				return new ResponseEntity<List<CardioArrestDetection>>(cardioArrestDetections, HttpStatus.NOT_FOUND);
 			} else
@@ -67,8 +53,5 @@ public class HeartiController {
 		}
 		return null;
 	}
-	
-	
-	
-	
+
 }

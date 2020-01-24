@@ -1,31 +1,29 @@
 package com.discoveri.heartihealth.dto;
 
-import java.util.Date;
-
-public class WeeklyPrediction {
-	private String weeks;
+public class IntervalPrediction {
+	private String interval;
 	private String date;
 	private int predicted;
-	private int cured ;
-	
-	public WeeklyPrediction() {
+	private int cured;
+
+	public IntervalPrediction() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public WeeklyPrediction(String weeks, String date, int predicted, int cured) {
+	public IntervalPrediction(String interval, String date, int predicted, int cured) {
 		super();
-		this.weeks = weeks;
+		this.interval = interval;
 		this.date = date;
 		this.predicted = predicted;
 		this.cured = cured;
 	}
 
-	public String getWeeks() {
-		return weeks;
+	public String getInterval() {
+		return interval;
 	}
 
-	public void setWeeks(String weeks) {
-		this.weeks = weeks;
+	public void setInterval(String interval) {
+		this.interval = interval;
 	}
 
 	public String getDate() {
@@ -51,7 +49,5 @@ public class WeeklyPrediction {
 	public void setCured(int cured) {
 		this.cured = cured;
 	}
-	
-
 
 }

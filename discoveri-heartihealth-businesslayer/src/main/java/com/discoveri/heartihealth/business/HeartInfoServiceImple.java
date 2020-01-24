@@ -19,7 +19,7 @@ public class HeartInfoServiceImple implements HeartInfoService {
 	
 
 	@Override
-	public List<WeeklyPrediction> weekilyReport() throws PatientExceptions {
+	public List<WeeklyPrediction> weekilyReport() throws HeartiExceptions {
 		// TODO Auto-generated method stub
 		return patientInfoRepo.weekilyReport();
 	}

@@ -11,7 +11,6 @@ import com.discoveri.heartihealth.dto.CardioArrestDetection;
 import com.discoveri.heartihealth.dto.WeeklyPrediction;
 import com.discoveri.heartihealth.dto.YearlyPrediction;
 import com.discoveri.heartihealth.exceptions.PatientExceptions;
-
 import com.discoveri.heartihealth.repository.HeartInfoRepo;
 
 @Repository
@@ -89,7 +88,7 @@ public class HeartInfoInfoRepoImpl  implements HeartInfoRepo{
 			if(memberid < 0)
 				 rs = stmt.executeQuery("select c.date,m.age,m.gender from memberinfo m inner join cardiodiagnosis c on c.memberinfo_member_id = m.member_id");
 			else
-			    rs = stmt.executeQuery("select c.date,m.age,m.gender from memberinfo m inner join cardiodiagnosis c on m.member_id = c.memberinfo_member_id where m.member_id = "+memberid);
+			    rs = stmt.executeQuery("select c.date,m.age,m.gender from memberinfo m inner join cardiodiagnosis c on m.member_id = c.memberinfo_member_id where m.member_id = "+meberid);
 			//emp = new Patient();
 			while (rs.next()) {
 				CardioArrestDetection cardioArrestDetection =new CardioArrestDetection();
