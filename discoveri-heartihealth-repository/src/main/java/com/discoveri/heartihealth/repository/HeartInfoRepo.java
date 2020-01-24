@@ -10,22 +10,22 @@ import com.discoveri.heartihealth.exceptions.HeartiExceptions;
 
 public interface HeartInfoRepo {
 
-	List<IntervalPrediction> weekilyReport() throws HeartiExceptions;
+	List<IntervalPrediction> weeklyReport() throws HeartiExceptions;
 
 	List<IntervalPrediction> yearlyPredictions() throws HeartiExceptions;
 
 	List<IntervalPrediction> monthlyReport() throws HeartiExceptions;
 	
-	List<SymptomPrediction> getChestPainDetection(int memberid);
+	List<SymptomPrediction> getChestPainDetection(String memberid);
 	
-	List<SymptomPrediction> getBloodPressureDetection(int memberid);
+	List<SymptomPrediction> getBloodPressureDetection(String memberid);
 	
-	List<SymptomPrediction> getCholesterolDetection(int memberid);
+	List<SymptomPrediction> getCholesterolDetection(String memberid);
 	
-	List<LivePrediction> getLivePrediction(int memberid);
+	List<LivePrediction> getLivePrediction(String memberid);
 	
-	LivePrediction getLivePredictionBySymptom(int memberid,String symptomType);
+	LivePrediction getLivePredictionBySymptom(String memberid,String symptomType);
 	
 	
-	List<CardioArrestDetection> totalCardioArrestDetection(int memberid);
+	List<CardioArrestDetection> totalCardioArrestDetection(String memberid);
 }

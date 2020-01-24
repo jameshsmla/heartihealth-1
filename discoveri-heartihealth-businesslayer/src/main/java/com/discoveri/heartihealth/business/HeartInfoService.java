@@ -9,15 +9,15 @@ import com.discoveri.heartihealth.exceptions.HeartiExceptions;
 
 public interface HeartInfoService {
 
-	List<IntervalPrediction> weekilyReport() throws HeartiExceptions;
+	List<IntervalPrediction> weeklyReport() throws HeartiExceptions;
 
 	List<IntervalPrediction> yearlyReport() throws HeartiExceptions;
 	
 	List<IntervalPrediction> monthlyReport() throws HeartiExceptions;
 	
-	List<CardioArrestDetection> totalCardioArrestDetection(int memberid) ;
+	List<CardioArrestDetection> totalCardioArrestDetection(String memberid) ;
 	
-	List<LivePrediction> getLivePrediction(int memberid);
+	List<LivePrediction> getLivePrediction(String memberid);
 	
 	
 }

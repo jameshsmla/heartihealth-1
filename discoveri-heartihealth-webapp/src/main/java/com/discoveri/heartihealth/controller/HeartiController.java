@@ -28,7 +28,7 @@ public class HeartiController {
 	@RequestMapping(value = "/weeklyReport", method = RequestMethod.GET)
 	public ResponseEntity<List<IntervalPrediction>> weeklyReport() throws SQLException {
 		try {
-			List<IntervalPrediction> weeklypredication = heartInfoService.weekilyReport();
+			List<IntervalPrediction> weeklypredication = heartInfoService.weeklyReport();
 			if (weeklypredication == null) {
 				return new ResponseEntity<List<IntervalPrediction>>(weeklypredication, HttpStatus.NOT_FOUND);
 			} else
@@ -43,7 +43,7 @@ public class HeartiController {
 	@RequestMapping(value = "/yearlyReport",method = RequestMethod.GET)
 	public ResponseEntity<List<IntervalPrediction>> yearlyReport() throws SQLException {
 		try {
-			List<IntervalPrediction> yearlypredication = heartInfoService.weekilyReport();
+			List<IntervalPrediction> yearlypredication = heartInfoService.weeklyReport();
 			if (yearlypredication == null) {
 				return new ResponseEntity<List<IntervalPrediction>>(yearlypredication, HttpStatus.NOT_FOUND);
 			} else
@@ -62,7 +62,7 @@ public class HeartiController {
 		try {
 
 			if (reportType.equalsIgnoreCase("weeklyReport")) {
-				intervalReport = heartInfoService.weekilyReport();
+				intervalReport = heartInfoService.weeklyReport();
 			} else if (reportType.equalsIgnoreCase("yearlyReport")) {
 				intervalReport = heartInfoService.yearlyReport();
 			} else if (reportType.equalsIgnoreCase("monthlyReport")) {
@@ -81,7 +81,7 @@ public class HeartiController {
 
 	@RequestMapping(value = "/getTotalCardioArrestPrediction/{memberid}",method = RequestMethod.GET)
 
-	public ResponseEntity<List<CardioArrestDetection>> getTotalCardioArrestPrediction(@PathVariable int memberid)
+	public ResponseEntity<List<CardioArrestDetection>> getTotalCardioArrestPrediction(@PathVariable String memberid)
 			throws SQLException {
 		try {
 			List<CardioArrestDetection> cardioArrestDetections = heartInfoService.totalCardioArrestDetection(memberid);
@@ -99,7 +99,7 @@ public class HeartiController {
 	
 	@RequestMapping(value = "/livePredictions/{memberid}",method = RequestMethod.GET)
 
-	public ResponseEntity<List<LivePrediction>> getLivePrediction(@PathVariable int memberid)
+	public ResponseEntity<List<LivePrediction>> getLivePrediction(@PathVariable String memberid)
 			throws SQLException {
 		try {
 			List<LivePrediction> livePredictions = heartInfoService.getLivePrediction(memberid);

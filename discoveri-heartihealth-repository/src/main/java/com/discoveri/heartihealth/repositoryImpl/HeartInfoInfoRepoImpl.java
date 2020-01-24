@@ -18,7 +18,7 @@ import com.discoveri.heartihealth.repository.HeartInfoRepo;
 public class HeartInfoInfoRepoImpl  implements HeartInfoRepo{
 
 	@Override
-	public  List<IntervalPrediction> weekilyReport() throws HeartiExceptions {
+	public  List<IntervalPrediction> weeklyReport() throws HeartiExceptions {
 	//	Patient emp;
 		//WeeklyPrediction weeklyPrediction =new WeeklyPrediction();
 		List<IntervalPrediction> weeklyPredictions=new ArrayList<IntervalPrediction>();
@@ -26,12 +26,12 @@ public class HeartInfoInfoRepoImpl  implements HeartInfoRepo{
 		try {
 			con = DataSource.getConnetion();
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("select year(c.date) as year,sum(c.cardioarrestdetected) as predicted, sum(d.isrecovered) as cured from cardiodiagnosis c  inner join memberinfo m inner join diseasedetail d on m.member_id = c.memberinfo_member_id and c.cardio_id = d.cardiodiagnosis_cardio_id  group by year(c.date); ");
+			ResultSet rs = stmt.executeQuery(" SELECT DAYNAME(c.date) weeks, c.date as date, sum(c.cardioarrestdetected) as predicted, sum(d.isrecovered) as cured from memberinfo m inner join cardiodiagnosis c on m.member_id = c.memberinfo_member_id inner join diseasedetail d on c.cardio_id = d.cardiodiagnosis_cardio_id WHERE c.date >   DATE_SUB(NOW(), INTERVAL 1 WEEK) GROUP BY c.date  ");
 			//emp = new Patient();
 			while (rs.next()) {
 				IntervalPrediction weeklyPrediction =new IntervalPrediction();
 				weeklyPrediction.setInterval(rs.getString(1));
-				weeklyPrediction.setDate(rs.getString(2));
+				//weeklyPrediction.setDate(rs.getString(2));
 				weeklyPrediction.setPredicted(rs.getInt(3));
 				//weeklyPrediction.setCured(rs.getInt(4));
 				weeklyPredictions.add(weeklyPrediction);
@@ -56,7 +56,7 @@ public class HeartInfoInfoRepoImpl  implements HeartInfoRepo{
 			while (rs.next()) {
 				IntervalPrediction yearlyPrediction =new IntervalPrediction();
 				yearlyPrediction.setInterval(rs.getString(1));
-				yearlyPrediction.setDate(rs.getString(2));
+				//yearlyPrediction.setDate(rs.getString(2));
 				yearlyPrediction.setPredicted(rs.getInt(3));
 				//yearlyPrediction.setCured(rs.getInt(4));
 				yearlyPredictions.add(yearlyPrediction);
@@ -81,7 +81,7 @@ public class HeartInfoInfoRepoImpl  implements HeartInfoRepo{
 			while (rs.next()) {
 				IntervalPrediction monthlyPrediction =new IntervalPrediction();
 				monthlyPrediction.setInterval(rs.getString(1));
-				monthlyPrediction.setDate(rs.getString(2));
+				//monthlyPrediction.setDate(rs.getString(2));
 				monthlyPrediction.setPredicted(rs.getInt(3));
 				//yearlyPrediction.setCured(rs.getInt(4));
 				monthlyPredictions.add(monthlyPrediction);
@@ -104,7 +104,7 @@ public class HeartInfoInfoRepoImpl  implements HeartInfoRepo{
 
 
 	  @Override
-	    public List<CardioArrestDetection> totalCardioArrestDetection(int memberid) {
+	    public List<CardioArrestDetection> totalCardioArrestDetection(String memberid) {
 	        // TODO Auto-generated method stub
 	       
 	        List<CardioArrestDetection> cardioArrestDetections =new ArrayList<CardioArrestDetection>();
@@ -114,7 +114,7 @@ public class HeartInfoInfoRepoImpl  implements HeartInfoRepo{
 	            Statement stmt = con.createStatement();
 	            ResultSet rs;
 	           
-	            if(memberid < 0)
+	            if(memberid == null)
 	                 rs = stmt.executeQuery("select c.date,m.age,m.gender from memberinfo m inner join cardiodiagnosis c on c.memberinfo_member_id = m.member_id");
 	            else
 	                rs = stmt.executeQuery("select c.date,m.age,m.gender from memberinfo m inner join cardiodiagnosis c on m.member_id = c.memberinfo_member_id where m.member_id = "+memberid);
@@ -140,7 +140,7 @@ public class HeartInfoInfoRepoImpl  implements HeartInfoRepo{
 	
 
 	@Override
-	public List<SymptomPrediction> getChestPainDetection(int memberid) {
+	public List<SymptomPrediction> getChestPainDetection(String memberid) {
 		// TODO Auto-generated method stub
 		 List<SymptomPrediction> symptomPredictions =new ArrayList<SymptomPrediction>();
 	        Connection con=null;
@@ -149,7 +149,7 @@ public class HeartInfoInfoRepoImpl  implements HeartInfoRepo{
 	            Statement stmt = con.createStatement();
 	            ResultSet rs;
 	           
-	            if(memberid < 0)
+	            if(memberid ==  null)
 	                 rs = stmt.executeQuery("select s.date, s.cp from symptom s inner join cardiodiagnosis c\r\n" + 
 	                 		"on s.cardiodiagnosis_cardio_id = c.cardio_id\r\n" + 
 	                 		"inner join memberinfo m \r\n" + 
@@ -180,7 +180,7 @@ public class HeartInfoInfoRepoImpl  implements HeartInfoRepo{
 
 
 	@Override
-	public List<SymptomPrediction> getBloodPressureDetection(int memberid) {
+	public List<SymptomPrediction> getBloodPressureDetection(String memberid) {
 		// TODO Auto-generated method stub
 		 List<SymptomPrediction> symptomPredictions =new ArrayList<SymptomPrediction>();
 	        Connection con=null;
@@ -189,7 +189,7 @@ public class HeartInfoInfoRepoImpl  implements HeartInfoRepo{
 	            Statement stmt = con.createStatement();
 	            ResultSet rs;
 	           
-	            if(memberid < 0)
+	            if(memberid == null)
 	                 rs = stmt.executeQuery("select b.date, b.bloodpressure from bloodtest b inner join cardiodiagnosis c\r\n" + 
 	                 		"on b.cardiodiagnosis_cardio_id = c.cardio_id\r\n" + 
 	                 		"inner join memberinfo m \r\n" + 
@@ -221,7 +221,7 @@ public class HeartInfoInfoRepoImpl  implements HeartInfoRepo{
 
 
 	@Override
-	public List<SymptomPrediction> getCholesterolDetection(int memberid) {
+	public List<SymptomPrediction> getCholesterolDetection(String memberid) {
 		// TODO Auto-generated method stub
 		 List<SymptomPrediction> symptomPredictions =new ArrayList<SymptomPrediction>();
 	        Connection con=null;
@@ -230,7 +230,7 @@ public class HeartInfoInfoRepoImpl  implements HeartInfoRepo{
 	            Statement stmt = con.createStatement();
 	            ResultSet rs;
 	           
-	            if(memberid < 0)
+	            if(memberid == null)
 	                 rs = stmt.executeQuery("select b.date, b.serumcholesterol from bloodtest b inner join cardiodiagnosis c\r\n" + 
 	                 		"on b.cardiodiagnosis_cardio_id = c.cardio_id\r\n" + 
 	                 		"inner join memberinfo m \r\n" + 
@@ -261,7 +261,7 @@ public class HeartInfoInfoRepoImpl  implements HeartInfoRepo{
 
 
 	@Override
-	public List<LivePrediction> getLivePrediction(int memberid) {
+	public List<LivePrediction> getLivePrediction(String memberid) {
 		// TODO Auto-generated method stub
 		
 		 List<LivePrediction> livePredictions =new ArrayList<LivePrediction>();
@@ -275,7 +275,7 @@ public class HeartInfoInfoRepoImpl  implements HeartInfoRepo{
 
 
 	@Override
-	public LivePrediction getLivePredictionBySymptom(int memberid, String symptomType) {
+	public LivePrediction getLivePredictionBySymptom(String memberid, String symptomType) {
 		// TODO Auto-generated method stub
 		 LivePrediction livePrediction = new LivePrediction();
 		 List<SymptomPrediction> symptomPredictions = new ArrayList<SymptomPrediction>();

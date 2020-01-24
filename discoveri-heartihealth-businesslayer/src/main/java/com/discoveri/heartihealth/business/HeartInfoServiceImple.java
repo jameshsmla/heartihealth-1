@@ -18,9 +18,9 @@ public class HeartInfoServiceImple implements HeartInfoService {
 	public HeartInfoRepo heartInfoRepo;
 
 	@Override
-	public List<IntervalPrediction> weekilyReport() throws HeartiExceptions {
+	public List<IntervalPrediction> weeklyReport() throws HeartiExceptions {
 		 
-		return heartInfoRepo.weekilyReport();
+		return heartInfoRepo.weeklyReport();
 	}
 
 	@Override
@@ -36,13 +36,13 @@ public class HeartInfoServiceImple implements HeartInfoService {
 	}
 
 	@Override
-	public List<CardioArrestDetection> totalCardioArrestDetection(int memberid) {
+	public List<CardioArrestDetection> totalCardioArrestDetection(String memberid) {
 		// TODO Auto-generated method stub
 		return heartInfoRepo.totalCardioArrestDetection(memberid);
 	}
 
 	@Override
-	public List<LivePrediction> getLivePrediction(int memberid) {
+	public List<LivePrediction> getLivePrediction(String memberid) {
 		// TODO Auto-generated method stub
 		return heartInfoRepo.getLivePrediction(memberid);
 	}
