@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.discoveri.heartihealth.business.HeartInfoService;
+import com.discoveri.heartihealth.dto.CardioArrestDetection;
 import com.discoveri.heartihealth.dto.IntervalPrediction;
 import com.discoveri.heartihealth.exceptions.HeartiExceptions;
 
@@ -53,22 +54,38 @@ public class HeartiController {
 	@RequestMapping(value = "/intervalReport/{reportType}")
 	public ResponseEntity<List<IntervalPrediction>> intervalReport(@PathVariable String reportType)
 			throws SQLException {
-		List<IntervalPrediction> intervalReport =null;
+		List<IntervalPrediction> intervalReport = null;
 		try {
-			
+
 			if (reportType.equalsIgnoreCase("weeklyReport")) {
 				intervalReport = heartInfoService.weekilyReport();
 			} else if (reportType.equalsIgnoreCase("yearlyReport")) {
-				intervalReport=heartInfoService.yearlyReport();
-			}
-			else if(reportType.equalsIgnoreCase("monthlyReport")) {
-				intervalReport=heartInfoService.monthlyReport();
+				intervalReport = heartInfoService.yearlyReport();
+			} else if (reportType.equalsIgnoreCase("monthlyReport")) {
+				intervalReport = heartInfoService.monthlyReport();
 			}
 			if (intervalReport == null) {
 				return new ResponseEntity<List<IntervalPrediction>>(intervalReport, HttpStatus.NOT_FOUND);
 			} else
 				return new ResponseEntity<List<IntervalPrediction>>(intervalReport, HttpStatus.OK);
 		} catch (HeartiExceptions e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@RequestMapping(value = "/getTotalCardioArrestPrediction/{memberid}")
+
+	public ResponseEntity<List<CardioArrestDetection>> getTotalCardioArrestPrediction(@PathVariable int memberid)
+			throws SQLException {
+		try {
+			List<CardioArrestDetection> cardioArrestDetections = heartInfoService.totalCardioArrestDetection(memberid);
+			if (cardioArrestDetections == null) {
+				return new ResponseEntity<List<CardioArrestDetection>>(cardioArrestDetections, HttpStatus.NOT_FOUND);
+			} else
+				return new ResponseEntity<List<CardioArrestDetection>>(cardioArrestDetections, HttpStatus.OK);
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

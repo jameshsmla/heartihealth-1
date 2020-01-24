@@ -2,6 +2,7 @@ package com.discoveri.heartihealth.repository;
 
 import java.util.List;
 
+import com.discoveri.heartihealth.dto.CardioArrestDetection;
 import com.discoveri.heartihealth.dto.IntervalPrediction;
 import com.discoveri.heartihealth.dto.Symptom;
 import com.discoveri.heartihealth.exceptions.HeartiExceptions;
@@ -19,4 +20,6 @@ public interface HeartInfoRepo {
 	List<Symptom> getSymtomBloodpressure();
 	
 	List<Symptom> getSymtomSerumcholesterol();
+	
+	List<CardioArrestDetection> totalCardioArrestDetection(int memberid);
 }

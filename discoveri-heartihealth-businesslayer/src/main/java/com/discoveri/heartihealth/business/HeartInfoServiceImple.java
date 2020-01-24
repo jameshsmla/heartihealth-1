@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.discoveri.heartihealth.dto.CardioArrestDetection;
 import com.discoveri.heartihealth.dto.IntervalPrediction;
 import com.discoveri.heartihealth.exceptions.HeartiExceptions;
 import com.discoveri.heartihealth.repository.HeartInfoRepo;
@@ -31,6 +32,12 @@ public class HeartInfoServiceImple implements HeartInfoService {
 	public List<IntervalPrediction> monthlyReport() throws HeartiExceptions {
 
 		return heartInfoRepo.monthlyReport();
+	}
+
+	@Override
+	public List<CardioArrestDetection> totalCardioArrestDetection(int memberid) {
+		// TODO Auto-generated method stub
+		return heartInfoRepo.totalCardioArrestDetection(memberid);
 	}
 
 
