@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.discoveri.heartihealth.business.HeartInfoService;
 import com.discoveri.heartihealth.dto.CardioArrestDetection;
 import com.discoveri.heartihealth.dto.IntervalPrediction;
+import com.discoveri.heartihealth.dto.LivePrediction;
 import com.discoveri.heartihealth.exceptions.HeartiExceptions;
 
 @RestController
@@ -85,6 +86,24 @@ public class HeartiController {
 				return new ResponseEntity<List<CardioArrestDetection>>(cardioArrestDetections, HttpStatus.NOT_FOUND);
 			} else
 				return new ResponseEntity<List<CardioArrestDetection>>(cardioArrestDetections, HttpStatus.OK);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	
+	@RequestMapping(value = "/livePredictions/{memberid}")
+
+	public ResponseEntity<List<LivePrediction>> getLivePrediction(@PathVariable int memberid)
+			throws SQLException {
+		try {
+			List<LivePrediction> livePredictions = heartInfoService.getLivePrediction(memberid);
+			if (livePredictions == null) {
+				return new ResponseEntity<List<LivePrediction>>(livePredictions, HttpStatus.NOT_FOUND);
+			} else
+				return new ResponseEntity<List<LivePrediction>>(livePredictions, HttpStatus.OK);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

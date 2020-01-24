@@ -9,7 +9,8 @@ import org.springframework.stereotype.Repository;
 
 import com.discoveri.heartihealth.dto.CardioArrestDetection;
 import com.discoveri.heartihealth.dto.IntervalPrediction;
-import com.discoveri.heartihealth.dto.Symptom;
+import com.discoveri.heartihealth.dto.LivePrediction;
+import com.discoveri.heartihealth.dto.SymptomPrediction;
 import com.discoveri.heartihealth.exceptions.HeartiExceptions;
 import com.discoveri.heartihealth.repository.HeartInfoRepo;
 
@@ -93,25 +94,13 @@ public class HeartInfoInfoRepoImpl  implements HeartInfoRepo{
 	}
 
 
-	@Override
-	public List<Symptom> getSymtomCP() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 
-	@Override
-	public List<Symptom> getSymtomBloodpressure() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 
-	@Override
-	public List<Symptom> getSymtomSerumcholesterol() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 
 	  @Override
@@ -146,5 +135,176 @@ public class HeartInfoInfoRepoImpl  implements HeartInfoRepo{
 	        return cardioArrestDetections;
 	       
 	    }
+
+
+	
+
+	@Override
+	public List<SymptomPrediction> getChestPainDetection(int memberid) {
+		// TODO Auto-generated method stub
+		 List<SymptomPrediction> symptomPredictions =new ArrayList<SymptomPrediction>();
+	        Connection con=null;
+	        try {
+	            con = DataSource.getConnetion();
+	            Statement stmt = con.createStatement();
+	            ResultSet rs;
+	           
+	            if(memberid < 0)
+	                 rs = stmt.executeQuery("select s.date, s.cp from symptom s inner join cardiodiagnosis c\r\n" + 
+	                 		"on s.cardiodiagnosis_cardio_id = c.cardio_id\r\n" + 
+	                 		"inner join memberinfo m \r\n" + 
+	                 		"on m.member_id = c.memberinfo_member_id\r\n" + 
+	                 		"where c.cardioarrestdetected = 1 and  DATE(s.date) = DATE(NOW())  ;");
+	            else
+	                rs = stmt.executeQuery("select s.date, s.cp from symptom s inner join cardiodiagnosis c \r\n" + 
+	                		"on s.cardiodiagnosis_cardio_id = c.cardio_id\r\n" + 
+	                		"inner join memberinfo m \r\n" + 
+	                		"on m.member_id = c.memberinfo_member_id\r\n" + 
+	                		"where c.cardioarrestdetected = 1 and  DATE(s.date) = DATE(NOW()) and m.member_id = "+memberid+";");
+	         
+	            while (rs.next()) {
+	            	SymptomPrediction symptomPrediction =new SymptomPrediction();
+	            	
+	            	symptomPrediction.setTimestamp(rs.getString(1));
+	            	symptomPrediction.setSymptomValue(rs.getInt(2));
+	            	
+	           
+	                symptomPredictions.add(symptomPrediction);
+	            }
+	            con.close();
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	        return symptomPredictions;
+	}
+
+
+	@Override
+	public List<SymptomPrediction> getBloodPressureDetection(int memberid) {
+		// TODO Auto-generated method stub
+		 List<SymptomPrediction> symptomPredictions =new ArrayList<SymptomPrediction>();
+	        Connection con=null;
+	        try {
+	            con = DataSource.getConnetion();
+	            Statement stmt = con.createStatement();
+	            ResultSet rs;
+	           
+	            if(memberid < 0)
+	                 rs = stmt.executeQuery("select b.date, b.bloodpressure from bloodtest b inner join cardiodiagnosis c\r\n" + 
+	                 		"on b.cardiodiagnosis_cardio_id = c.cardio_id\r\n" + 
+	                 		"inner join memberinfo m \r\n" + 
+	                 		"on m.member_id = c.memberinfo_member_id\r\n" + 
+	                 		"where c.cardioarrestdetected = 1 and  DATE(b.date) = DATE(NOW()) ;");
+	            else
+	                rs = stmt.executeQuery("select b.date, b.bloodpressure from bloodtest b inner join cardiodiagnosis c\r\n" + 
+	                		"on b.cardiodiagnosis_cardio_id = c.cardio_id\r\n" + 
+	                		"inner join memberinfo m \r\n" + 
+	                		"on m.member_id = c.memberinfo_member_id\r\n" + 
+	                		"where c.cardioarrestdetected = 1 and  DATE(b.date) = DATE(NOW()) and m.member_id = "+memberid+";");
+	            
+	         
+	            while (rs.next()) {
+	            	SymptomPrediction symptomPrediction =new SymptomPrediction();
+	            	
+	            	symptomPrediction.setTimestamp(rs.getString(1));
+	            	symptomPrediction.setSymptomValue(rs.getInt(2));
+	            	
+	           
+	                symptomPredictions.add(symptomPrediction);
+	            }
+	            con.close();
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	        return symptomPredictions;
+	}
+
+
+	@Override
+	public List<SymptomPrediction> getCholesterolDetection(int memberid) {
+		// TODO Auto-generated method stub
+		 List<SymptomPrediction> symptomPredictions =new ArrayList<SymptomPrediction>();
+	        Connection con=null;
+	        try {
+	            con = DataSource.getConnetion();
+	            Statement stmt = con.createStatement();
+	            ResultSet rs;
+	           
+	            if(memberid < 0)
+	                 rs = stmt.executeQuery("select b.date, b.serumcholesterol from bloodtest b inner join cardiodiagnosis c\r\n" + 
+	                 		"on b.cardiodiagnosis_cardio_id = c.cardio_id\r\n" + 
+	                 		"inner join memberinfo m \r\n" + 
+	                 		"on m.member_id = c.memberinfo_member_id\r\n" + 
+	                 		"where c.cardioarrestdetected = 1 and  DATE(b.date) = DATE(NOW()) ;");
+	            else
+	                rs = stmt.executeQuery("select b.date, b.serumcholesterol from bloodtest b inner join cardiodiagnosis c\r\n" + 
+	                		"on b.cardiodiagnosis_cardio_id = c.cardio_id\r\n" + 
+	                		"inner join memberinfo m \r\n" + 
+	                		"on m.member_id = c.memberinfo_member_id\r\n" + 
+	                		"where c.cardioarrestdetected = 1 and  DATE(b.date) = DATE(NOW()) and m.member_id = "+memberid+";");
+	         
+	            while (rs.next()) {
+	            	SymptomPrediction symptomPrediction =new SymptomPrediction();
+	            	
+	            	symptomPrediction.setTimestamp(rs.getString(1));
+	            	symptomPrediction.setSymptomValue(rs.getInt(2));
+	            	
+	           
+	                symptomPredictions.add(symptomPrediction);
+	            }
+	            con.close();
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	        return symptomPredictions;
+	}
+
+
+	@Override
+	public List<LivePrediction> getLivePrediction(int memberid) {
+		// TODO Auto-generated method stub
+		
+		 List<LivePrediction> livePredictions =new ArrayList<LivePrediction>();
+		
+		 livePredictions.add(getLivePredictionBySymptom(memberid, "Chest Pain"));
+		 livePredictions.add(getLivePredictionBySymptom(memberid, "Blood Pressure"));
+		 livePredictions.add(getLivePredictionBySymptom(memberid, "Cholesterol"));
+		 
+		return livePredictions;
+	}
+
+
+	@Override
+	public LivePrediction getLivePredictionBySymptom(int memberid, String symptomType) {
+		// TODO Auto-generated method stub
+		 LivePrediction livePrediction = new LivePrediction();
+		 List<SymptomPrediction> symptomPredictions = new ArrayList<SymptomPrediction>();
+		 livePrediction.setSymptomType(symptomType);
+		 
+		 if(symptomType.equalsIgnoreCase("Chest Pain"))
+		 {
+		 symptomPredictions = getChestPainDetection(memberid);
+		 livePrediction.setSymptomPrediction(symptomPredictions);
+		 livePrediction.setTodayPredictionCount(symptomPredictions.size());
+		 }
+		 else if(symptomType.equalsIgnoreCase("Blood Pressure"))
+		 {
+			 symptomPredictions = getBloodPressureDetection(memberid);
+			 livePrediction.setSymptomPrediction(symptomPredictions);
+			 livePrediction.setTodayPredictionCount(symptomPredictions.size());
+			 
+		 }
+		 else if(symptomType.equalsIgnoreCase("Cholesterol"))
+		 {	
+
+	     symptomPredictions = getCholesterolDetection(memberid);
+		 livePrediction.setSymptomPrediction(symptomPredictions);
+		 livePrediction.setTodayPredictionCount(symptomPredictions.size());
+			 
+		 }
+		 
+	
+		return livePrediction;
+	}
 	
 }
