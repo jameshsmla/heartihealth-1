@@ -2,14 +2,14 @@ package com.discoveri.heartihealth.business;
 
 import java.util.List;
 
-import com.discoveri.heartihealth.dto.WeeklyPrediction;
-import com.discoveri.heartihealth.exceptions.PatientExceptions;
-import com.discoveri.heartihealth.model.Patient;
+import com.discoveri.heartihealth.dto.IntervalPrediction;
+import com.discoveri.heartihealth.exceptions.HeartiExceptions;
 
 public interface HeartInfoService {
-	Patient getPatientInfo() throws PatientExceptions;
 
-	List<Patient> getAllPatients();
+	List<IntervalPrediction> weekilyReport() throws HeartiExceptions;
+
+	List<IntervalPrediction> yearlyReport() throws HeartiExceptions;
 	
-	List<WeeklyPrediction> weekilyReport() throws PatientExceptions;
+	List<IntervalPrediction> monthlyReport() throws HeartiExceptions;
 }
