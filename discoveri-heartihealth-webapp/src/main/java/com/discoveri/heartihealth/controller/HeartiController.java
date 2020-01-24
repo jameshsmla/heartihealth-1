@@ -3,11 +3,14 @@ package com.discoveri.heartihealth.controller;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.swing.text.html.FormSubmitEvent.MethodType;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.discoveri.heartihealth.business.HeartInfoService;
@@ -22,7 +25,7 @@ public class HeartiController {
 	@Autowired
 	private HeartInfoService heartInfoService;
 
-	@RequestMapping(value = "/weeklyReport")
+	@RequestMapping(value = "/weeklyReport", method = RequestMethod.GET)
 	public ResponseEntity<List<IntervalPrediction>> weeklyReport() throws SQLException {
 		try {
 			List<IntervalPrediction> weeklypredication = heartInfoService.weekilyReport();
@@ -37,7 +40,7 @@ public class HeartiController {
 		return null;
 	}
 
-	@RequestMapping(value = "/yearlyReport")
+	@RequestMapping(value = "/yearlyReport",method = RequestMethod.GET)
 	public ResponseEntity<List<IntervalPrediction>> yearlyReport() throws SQLException {
 		try {
 			List<IntervalPrediction> yearlypredication = heartInfoService.weekilyReport();
@@ -52,7 +55,7 @@ public class HeartiController {
 		return null;
 	}
 
-	@RequestMapping(value = "/intervalReport/{reportType}")
+	@RequestMapping(value = "/intervalReport/{reportType}",method = RequestMethod.GET)
 	public ResponseEntity<List<IntervalPrediction>> intervalReport(@PathVariable String reportType)
 			throws SQLException {
 		List<IntervalPrediction> intervalReport = null;
@@ -76,7 +79,7 @@ public class HeartiController {
 		return null;
 	}
 
-	@RequestMapping(value = "/getTotalCardioArrestPrediction/{memberid}")
+	@RequestMapping(value = "/getTotalCardioArrestPrediction/{memberid}",method = RequestMethod.GET)
 
 	public ResponseEntity<List<CardioArrestDetection>> getTotalCardioArrestPrediction(@PathVariable int memberid)
 			throws SQLException {
@@ -94,7 +97,7 @@ public class HeartiController {
 	}
 	
 	
-	@RequestMapping(value = "/livePredictions/{memberid}")
+	@RequestMapping(value = "/livePredictions/{memberid}",method = RequestMethod.GET)
 
 	public ResponseEntity<List<LivePrediction>> getLivePrediction(@PathVariable int memberid)
 			throws SQLException {
