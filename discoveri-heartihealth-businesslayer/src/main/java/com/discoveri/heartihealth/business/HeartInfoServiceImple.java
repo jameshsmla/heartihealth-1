@@ -5,23 +5,24 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.discoveri.heartihealth.dto.WeeklyPrediction;
 import com.discoveri.heartihealth.exceptions.PatientExceptions;
 import com.discoveri.heartihealth.model.Patient;
-import com.discoveri.heartihealth.repository.PatientInfoRepo;
-import com.discoveri.heartihealth.repositoryImpl.PatientInfoRepoImpl;
+import com.discoveri.heartihealth.repository.HeartInfoRepo;
+import com.discoveri.heartihealth.repositoryImpl.HeartInfoInfoRepoImpl;
 
 @Service
-public class PatientInfoServiceImple implements PatientInfoService {
+public class HeartInfoServiceImple implements HeartInfoService {
 
 	@Autowired
-	public PatientInfoRepo patientInfoRepo;
+	public HeartInfoRepo patientInfoRepo;
 
 	@Override
 	public Patient getPatientInfo() throws PatientExceptions {
-		PatientInfoRepoImpl pd = new PatientInfoRepoImpl();
+		//HeartInfoInfoRepoImpl pd = new HeartInfoInfoRepoImpl();
 
 		try {
-			return pd.getPatientInfo();
+			return patientInfoRepo.getPatientInfo();
 		} catch (PatientExceptions e) {
 			throw new PatientExceptions(e.getErrorMessage());
 		}
@@ -31,5 +32,11 @@ public class PatientInfoServiceImple implements PatientInfoService {
 	public List<Patient> getAllPatients() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<WeeklyPrediction> weekilyReport() throws PatientExceptions {
+		// TODO Auto-generated method stub
+		return patientInfoRepo.weekilyReport();
 	}
 }
