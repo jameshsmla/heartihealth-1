@@ -27,6 +27,13 @@
 			<artifactId>discoveri-heartihealth-exception</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>com.discoveri.heartihealth</groupId>
+			<artifactId>
+				discoveri-heartihealth-configuration
+			</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 	<artifactId>discoveri-heartihealth-repository</artifactId>
 </project>

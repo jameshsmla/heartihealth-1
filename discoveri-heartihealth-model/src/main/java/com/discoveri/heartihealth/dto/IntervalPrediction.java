@@ -1,8 +1,7 @@
 package com.discoveri.heartihealth.dto;
 
 public class IntervalPrediction {
-	private String interval;
-	private String date;
+	private String interval; 
 	private int predicted;
 	private int cured;
 
@@ -10,10 +9,10 @@ public class IntervalPrediction {
 		// TODO Auto-generated constructor stub
 	}
 
-	public IntervalPrediction(String interval, String date, int predicted, int cured) {
+	public IntervalPrediction(String interval,int predicted, int cured) {
 		super();
 		this.interval = interval;
-		this.date = date;
+		
 		this.predicted = predicted;
 		this.cured = cured;
 	}
@@ -24,14 +23,6 @@ public class IntervalPrediction {
 
 	public void setInterval(String interval) {
 		this.interval = interval;
-	}
-
-	public String getDate() {
-		return date;
-	}
-
-	public void setDate(String date) {
-		this.date = date;
 	}
 
 	public int getPredicted() {
@@ -49,5 +40,4 @@ public class IntervalPrediction {
 	public void setCured(int cured) {
 		this.cured = cured;
 	}
-
 }
